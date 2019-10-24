@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static jdk.nashorn.internal.runtime.Debug.id;
 
 
 
@@ -40,6 +41,8 @@ public class main extends javax.swing.JFrame {
      
       product product_obj = new product();
     conn con = new conn();
+    
+        Object id = null;
     
     void clearAddProductFields(){
         Pname.setText(null);
@@ -85,12 +88,17 @@ public class main extends javax.swing.JFrame {
         Pname = new javax.swing.JTextField();
         qq = new javax.swing.JSpinner();
         pp = new javax.swing.JFormattedTextField();
-        jButton2 = new javax.swing.JButton();
+        Badd = new javax.swing.JButton();
+        Bsave = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Ptable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+
+        AddProduct.setMaximumSize(new java.awt.Dimension(400, 200));
+        AddProduct.setMinimumSize(new java.awt.Dimension(400, 200));
 
         jLabel2.setText("Product Name:");
 
@@ -104,10 +112,24 @@ public class main extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("ADD");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        pp.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        pp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                ppActionPerformed(evt);
+            }
+        });
+
+        Badd.setText("ADD");
+        Badd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BaddActionPerformed(evt);
+            }
+        });
+
+        Bsave.setText("SAVE");
+        Bsave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BsaveActionPerformed(evt);
             }
         });
 
@@ -129,8 +151,10 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(AddProductLayout.createSequentialGroup()
                 .addGap(155, 155, 155)
-                .addComponent(jButton2)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addGroup(AddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Badd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Bsave, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         AddProductLayout.setVerticalGroup(
             AddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,8 +172,10 @@ public class main extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(pp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(Badd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Bsave)
+                .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -188,6 +214,13 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Edit");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,6 +230,7 @@ public class main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
@@ -210,7 +244,9 @@ public class main extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
-                .addGap(203, 203, 203)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4)
+                .addGap(174, 174, 174)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -226,7 +262,7 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_PnameActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void BaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BaddActionPerformed
         String productname = Pname.getText();
         int quantity = (int) qq.getValue();
         Object price = pp.getValue();
@@ -238,11 +274,17 @@ public class main extends javax.swing.JFrame {
             refresh();
           
         }        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_BaddActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         AddProduct.setVisible(true);
-        AddProduct.setAlwaysOnTop(true);        // TODO add your handling code here:
+        AddProduct.setLocationRelativeTo(rootPane);
+        AddProduct.setAlwaysOnTop(true);
+        Badd.setVisible(true);
+        Bsave.setVisible(false);
+        qq.setEnabled(true);
+        
+        this.clearAddProductFields();       // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -268,6 +310,51 @@ public class main extends javax.swing.JFrame {
            
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int table_row = Ptable.getSelectedRow();
+        
+        if(table_row != -1){
+        id = Ptable.getValueAt(table_row, 0);
+        Object product_name = Ptable.getValueAt(table_row, 1);
+        Object pro_qty = Ptable.getValueAt(table_row, 2);
+        Object pro_price = Ptable.getValueAt(table_row, 3);
+        
+        Pname.setText((String) product_name);
+        qq.setValue(Integer.valueOf((String) pro_qty));
+        pp.setValue(Double.valueOf((String) pro_price));
+        
+        AddProduct.setVisible(true);
+        AddProduct.setLocationRelativeTo(rootPane);
+        AddProduct.setAlwaysOnTop(true);
+        Bsave.setVisible(true);
+        Badd.setVisible(false);
+        
+        qq.setEnabled(false);
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Please Select a product", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void BsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BsaveActionPerformed
+        // TODO add your handling code here:
+         String newpn = Pname.getText();
+        Object newpr = pp.getValue();
+        
+        int r = product_obj.editProduct(id, newpn, newpr);
+        if(r==1){
+            JOptionPane.showMessageDialog(AddProduct, "Product Edit Successfully");
+           AddProduct.setVisible(false);
+            this.refresh();
+        }else{
+            JOptionPane.showMessageDialog(AddProduct, "Problem Editing Produc", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BsaveActionPerformed
+
+    private void ppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ppActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,11 +393,13 @@ public class main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame AddProduct;
+    private javax.swing.JButton Badd;
+    private javax.swing.JButton Bsave;
     private javax.swing.JTextField Pname;
     private javax.swing.JTable Ptable;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
